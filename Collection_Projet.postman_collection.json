@@ -1,0 +1,552 @@
+{
+	"info": {
+		"_postman_id": "aaa8be79-6b93-4fcd-98b9-a95f4ce98539",
+		"name": "Collection Projet",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25747881"
+	},
+	"item": [
+		{
+			"name": "Get Moderator",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VybmFtZSI6W3siSWRfVXRpbGlzYXRldXIiOiIyIn1dLCJSb2xlIjpbeyJSb2xlX1V0aWxpc2F0ZXVyIjoibW9kZXJhdGV1ciJ9XSwiZXhwIjoxNjc5MTUxODMxfQ.EcDwchG3eKNRqb-LgBMDQkg1DNufKzw2rN106ugOhUA",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost/R4.01/Projet/Serveur.php?Id_article=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"R4.01",
+						"Projet",
+						"Serveur.php"
+					],
+					"query": [
+						{
+							"key": "Id_article",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Publisher",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VybmFtZSI6W3siSWRfVXRpbGlzYXRldXIiOiIxIn1dLCJSb2xlIjpbeyJSb2xlX1V0aWxpc2F0ZXVyIjoicHVibGlzaGVyIn1dLCJleHAiOjE2NzkxNDc4NDh9.B-Do6Em586r-nN5q8KSinyDogO9pGvdxQk5WjWhDXX0",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost/R4.01/Projet/Serveur.php?Id_article=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"R4.01",
+						"Projet",
+						"Serveur.php"
+					],
+					"query": [
+						{
+							"key": "Id_article",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Anonymous",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VybmFtZSI6W3siSWRfVXRpbGlzYXRldXIiOiIyIn1dLCJSb2xlIjpbeyJSb2xlX1V0aWxpc2F0ZXVyIjoibW9kZXJhdGV1ciJ9XSwiZXhwIjoxNjc5MDQ4ODM1fQ.FrcWiCu7Wl6UNA7FhrsiOCrcOH2su3aCfpQNEWBWaMw",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "http://localhost/R4.01/Projet/Serveur.php?Id_article=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"R4.01",
+						"Projet",
+						"Serveur.php"
+					],
+					"query": [
+						{
+							"key": "Id_article",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Création du token Moderateur",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Username\": \"ChuckNurris\",\r\n    \"pwd\": \"Password\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost/R4.01/Projet/ServeurAuthentification.php",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"R4.01",
+						"Projet",
+						"ServeurAuthentification.php"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Création du token Publisher",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Username\": \"Napoleon1er\",\r\n    \"pwd\": \"empereur_des_français\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost/R4.01/Projet/ServeurAuthentification.php",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"R4.01",
+						"Projet",
+						"ServeurAuthentification.php"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Création du token Publisher 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Username\": \"Moliere\",\r\n    \"pwd\": \"JeanBaptistePoquelin\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost/R4.01/Projet/ServeurAuthentification.php",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"R4.01",
+						"Projet",
+						"ServeurAuthentification.php"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Poster Article Publisher",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VybmFtZSI6W3siSWRfVXRpbGlzYXRldXIiOiIxIn1dLCJSb2xlIjpbeyJSb2xlX1V0aWxpc2F0ZXVyIjoicHVibGlzaGVyIn1dLCJleHAiOjE2NzkxNjI5Njd9.U10wIDoxOBWAX8EXANlp1G5_C8dzcG9ZBpcAjOQ57GE",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"auteur\": \"Napoléon1er\",\r\n    \"contenu\": \"La mort n'est rien, mais vivre vaincu et sans gloire c'est mourrir tous les jours\"\r\n} ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost/R4.01/Projet/Serveur.php",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"R4.01",
+						"Projet",
+						"Serveur.php"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Liker/Disliker Article",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VybmFtZSI6W3siSWRfVXRpbGlzYXRldXIiOiIxIn1dLCJSb2xlIjpbeyJSb2xlX1V0aWxpc2F0ZXVyIjoicHVibGlzaGVyIn1dLCJleHAiOjE2NzkxNjI5Njd9.U10wIDoxOBWAX8EXANlp1G5_C8dzcG9ZBpcAjOQ57GE",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Id_Article\": 6,\r\n    \"Like_ou_Dislike\" : 1\r\n} ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost/R4.01/Projet/Serveur.php",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"R4.01",
+						"Projet",
+						"Serveur.php"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Put publisher",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VybmFtZSI6W3siSWRfVXRpbGlzYXRldXIiOiIxIn1dLCJSb2xlIjpbeyJSb2xlX1V0aWxpc2F0ZXVyIjoicHVibGlzaGVyIn1dLCJleHAiOjE2NzkxNjI5Njd9.U10wIDoxOBWAX8EXANlp1G5_C8dzcG9ZBpcAjOQ57GE",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Id_Article\": 6,\r\n    \"Contenu\": \"La mort n'est rien mais vivre vaincu et sans gloire c'est mourrir tous les jours\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost/R4.01/Projet/Serveur.php",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"R4.01",
+						"Projet",
+						"Serveur.php"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Put modifier like/dislike",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VybmFtZSI6W3siSWRfVXRpbGlzYXRldXIiOiIzIn1dLCJSb2xlIjpbeyJSb2xlX1V0aWxpc2F0ZXVyIjoicHVibGlzaGVyIn1dLCJleHAiOjE2NzkxNjcyNjZ9.qg6BR5PIXHCS1v3fZacXw9hXJ8qECTVZYlwHOZQd84s",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Id_Article\": 6,\r\n    \"Like_ou_Dislike\" : 0\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost/R4.01/Projet/Serveur.php",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"R4.01",
+						"Projet",
+						"Serveur.php"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Article Moderator",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VybmFtZSI6W3siSWRfVXRpbGlzYXRldXIiOiIyIn1dLCJSb2xlIjpbeyJSb2xlX1V0aWxpc2F0ZXVyIjoibW9kZXJhdGV1ciJ9XSwiZXhwIjoxNjc5MTUxODMxfQ.EcDwchG3eKNRqb-LgBMDQkg1DNufKzw2rN106ugOhUA",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Id_Article\" : 3\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost/R4.01/Projet/Serveur.php?Id_article=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"R4.01",
+						"Projet",
+						"Serveur.php"
+					],
+					"query": [
+						{
+							"key": "Id_article",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Article Publisher Auteur",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VybmFtZSI6W3siSWRfVXRpbGlzYXRldXIiOiIxIn1dLCJSb2xlIjpbeyJSb2xlX1V0aWxpc2F0ZXVyIjoicHVibGlzaGVyIn1dLCJleHAiOjE2NzkxNjI5Njd9.U10wIDoxOBWAX8EXANlp1G5_C8dzcG9ZBpcAjOQ57GE",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Id_Article\" : 8\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost/R4.01/Projet/Serveur.php?Id_article=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"R4.01",
+						"Projet",
+						"Serveur.php"
+					],
+					"query": [
+						{
+							"key": "Id_article",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Retirer Like/Disline d'un Article",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VybmFtZSI6W3siSWRfVXRpbGlzYXRldXIiOiIxIn1dLCJSb2xlIjpbeyJSb2xlX1V0aWxpc2F0ZXVyIjoicHVibGlzaGVyIn1dLCJleHAiOjE2NzkxNjI5Njd9.U10wIDoxOBWAX8EXANlp1G5_C8dzcG9ZBpcAjOQ57GE",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Id_Article\" : 8\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost/R4.01/Projet/Serveur.php?Id_article=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"R4.01",
+						"Projet",
+						"Serveur.php"
+					],
+					"query": [
+						{
+							"key": "Id_article",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
