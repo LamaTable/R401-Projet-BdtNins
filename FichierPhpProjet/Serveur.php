@@ -27,7 +27,40 @@
         break;
 
     case "POST" :
+        if(!empty($RoleUtilisateur)){
+            $postedData = file_get_contents('php://input');
+            $data = json_decode($postedData);
+            if($RoleUtilisateur == "publisher"){
+                if(!empty($data->auteur) && !empty($data->contenu)){
+                    $Auteur = $data->auteur;
+                    $Contenu = $data->contenu;
+                    //Publier Article
+                    if(!empty($Auteur) && !empty($Contenu)){
+                        deliver_response(201, "Votre message", addData($linkpdo, $Auteur, $Contenu));
+                    }
+                }
+
+                // Liker ou Disliker
+                if(!empty($data->Id_Article)){
+                    $Id_Article = $data->Id_Article;
+                    $AuteurName = getAuteurName($linkpdo, $Id_Article);
+                    $AuteurId = getAuteurId($linkpdo, $AuteurName[0]['Auteur']);
+                    if($Id_utilisateur !=  $AuteurId[0]['Id_Utilisateur']){
+                        if(($data->Like_ou_Dislike) == 0 && !empty($data->Id_Article) || ($data->Like_ou_Dislike) == 1 && !empty($data->Id_Article)){                            
+                            $like = $data->Like_ou_Dislike;
+                            $Id_Article = $data->Id_Article;   
+                            if($like == 1 || $like == 0){
+                                deliver_response(201, "Votre message", addLike($linkpdo, $Id_Article, $Id_utilisateur, $like));
+                            }else{
+                                echo "la valeur inserer est incorrecte, veuillez verifier que la valeur est soit 1 (like) ou 0 (dislike)";
+                            }
+                        }
+                    }
+                }                
+            }
+        }
         break;
+        
     case "PUT" :
         break;
 

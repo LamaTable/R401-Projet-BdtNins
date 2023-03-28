@@ -246,3 +246,89 @@ function getAllDataArticle($pdo, $Id_Article){
 }
 
 
+//-----------------------------------POST---------------------------------
+// Ajout d'une donnée
+function addData($pdo, $Auteur, $Contenu){
+    try {
+        if (!empty($Contenu)&&!empty($Auteur)){
+            $statement = $pdo->prepare("INSERT INTO articles (Date_Publication, Auteur, Contenu) VALUES (NOW(), :Auteur, :Contenu)");
+            $statement->bindParam(':Auteur', $Auteur, PDO::PARAM_STR);
+            $statement->bindParam(':Contenu', $Contenu, PDO::PARAM_STR);
+            $statement->execute();
+            return true;
+        } else {
+            return false;
+        }
+    } catch (PDOException $e) {
+        // En cas d'erreur, on affiche un message et on arrête le script
+        die("Erreur lors de l'ajout de données : " . $e->getMessage());
+    }
+}
+
+// Mise à jour d'une donnée
+function updateData($pdo, $Id_Article, $Contenu){
+    try {
+        if (!empty($Id_Article) && !empty($Contenu)){
+            $statement = $pdo->prepare("UPDATE articles SET Contenu = :Contenu WHERE Id_Article = :Id_Article");
+            $statement->bindParam(':Contenu', $Contenu, PDO::PARAM_STR);
+            $statement->bindParam(':Id_Article', $Id_Article,PDO::PARAM_INT);
+            $statement->execute();
+            return true;
+        } else {
+            return false;
+        }
+    } catch (PDOException $e) {
+        // En cas d'erreur, on affiche un message et on arrête le script
+        die("Erreur lors de la mise à jour de données : " . $e->getMessage());
+    }
+}
+
+// Suppression d'une donnée
+function deleteData($pdo, $Id_Article){
+    try {
+        if(!empty($Id_Article)){
+            $statement = $pdo->prepare("DELETE FROM articles WHERE Id_Article = :Id_Article");
+            $statement->bindParam(':Id_Article', $Id_Article,PDO::PARAM_INT);
+            $statement->execute();
+            return true;
+        } else {
+            return false;
+        }
+    } catch (PDOException $e) {
+        // En cas d'erreur, on affiche un message et on arrête le script
+        die("Erreur lors de la suppression de données : " . $e->getMessage());
+    }
+}
+
+function getAuteurId($pdo, $Auteur){
+    $statement = $pdo->prepare("SELECT Id_Utilisateur FROM utilisateurs WHERE Username = ?");
+    $statement->execute([$Auteur]);
+    $dataArticle = $statement->fetchAll(PDO::FETCH_ASSOC);
+    return  $dataArticle;
+}
+
+function getAuteurName($pdo, $Id_Article){
+    $statement = $pdo->prepare("SELECT Auteur FROM articles WHERE Id_Article = ?");
+    $statement->execute([$Id_Article]);
+    $dataArticle = $statement->fetchAll(PDO::FETCH_ASSOC);
+    return  $dataArticle;
+}
+
+
+
+
+// Ajout d'un Like/dislike pour un article et un utilisateur donné
+function addLike($pdo, $Id_Article, $Id_Utilisateur, $Like_or_Dislike) {
+    try {
+        $statement = $pdo->prepare("INSERT INTO likes (Id_Article, Id_Utilisateur, Like_or_Dislike) VALUES (:Id_Article, :Id_Utilisateur, :Like_or_Dislike)");
+        $statement->bindParam(':Id_Article', $Id_Article,PDO::PARAM_INT);
+        $statement->bindParam(':Id_Utilisateur', $Id_Utilisateur,PDO::PARAM_INT);
+        $statement->bindParam(':Like_or_Dislike', $Like_or_Dislike ,PDO::PARAM_BOOL);
+        $statement->execute();
+        return true;
+    } catch (PDOException $e) {
+        // En cas d'erreur, on affiche un message et on arrête le script
+        die("Erreur lors de l'ajout d'un like : " . $e->getMessage());
+    }
+}
+
