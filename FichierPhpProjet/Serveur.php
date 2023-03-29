@@ -62,6 +62,27 @@
         break;
         
     case "PUT" :
+        if(!empty($RoleUtilisateur)){
+            $postedData = file_get_contents('php://input');
+            $data = json_decode($postedData);
+            if($RoleUtilisateur == "publisher"){
+                if(!empty( $data->Contenu) && !empty( $Id_Article = $data->Id_Article)){
+                    $Contenu = $data->Contenu;
+                    $Id_Article = $data->Id_Article;
+                    deliver_response(201, "Votre message", updateData($linkpdo, $Id_Article, $Contenu));
+                }
+
+            }
+           
+            if(($data->Like_ou_Dislike) == 0 && !empty($data->Id_Article) || ($data->Like_ou_Dislike) == 1 && !empty($data->Id_Article)){                            
+                if(!empty( $Id_Article = $data->Id_Article)){
+                    $Id_Article = $data->Id_Article;
+                    $Like_ou_Dislike = $data->Like_ou_Dislike;
+                    deliver_response(201, "Votre message", updateLike($linkpdo, $Id_Article, $Id_utilisateur, $Like_ou_Dislike));
+                }
+            }
+
+        }
         break;
 
     case "DELETE" :

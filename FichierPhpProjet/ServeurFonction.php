@@ -332,3 +332,19 @@ function addLike($pdo, $Id_Article, $Id_Utilisateur, $Like_or_Dislike) {
     }
 }
 
+//---------------------------PATCH----------------------------------
+// Mise à jour d'un like pour un article et un utilisateur donné
+function updateLike($pdo, $Id_Article, $Id_Utilisateur, $Like_or_Dislike) {
+    try {
+        echo $Id_Article, $Id_Utilisateur, $Like_or_Dislike;
+        $statement = $pdo->prepare("UPDATE likes SET Like_or_Dislike = :Like_or_Dislike WHERE Id_Article = :Id_Article AND Id_Utilisateur = :Id_Utilisateur");
+        $statement->bindParam(':Id_Article', $Id_Article,PDO::PARAM_INT);
+        $statement->bindParam(':Id_Utilisateur', $Id_Utilisateur,PDO::PARAM_INT);
+        $statement->bindParam(':Like_or_Dislike', $Like_or_Dislike,PDO::PARAM_BOOL);
+        $statement->execute();
+        return true;
+    } catch (PDOException $e) {
+        // En cas d'erreur, on affiche un message et on arrête le script
+        die("Erreur lors de la mise à jour d'un like : " . $e->getMessage());
+    }
+}
