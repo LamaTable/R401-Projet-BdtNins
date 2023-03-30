@@ -1,7 +1,5 @@
 <?php
-
 include('ServeurFonction.php');
-include('jwt_utils.php');
 $linkpdo = connectToDatabase();
 header("Content-Type:application/json");
 $http_method = $_SERVER['REQUEST_METHOD'];

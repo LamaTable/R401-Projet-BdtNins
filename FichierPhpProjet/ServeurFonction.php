@@ -82,8 +82,6 @@ function checkUser($pdo, $Username, $pwd){
 
 //-------------------------------------ALL----------------------------------------------------
 function getTokenUtilisateurRole(){
-    try {
-
         if (!empty($bearer_token = get_bearer_token())){
             $bearer_token = get_bearer_token();
             if(is_jwt_valid($bearer_token)){
@@ -92,17 +90,15 @@ function getTokenUtilisateurRole(){
                 $objet = json_decode($header);
                 $RoleUtilisateur = $objet->Role[0]->Role_Utilisateur;
                 return  $RoleUtilisateur;
+            }else{
+                die("Le Token n'est pas valide");
             }
            
         }
-    } catch (PDOException $e) {
-        // En cas d'erreur, on affiche un message et on arrête le script
-        die("Erreur lors de la récupération des données : " . $e->getMessage());
-    }
+
 }
 
 function getTokenIdUtilisateur(){
-    try {
         if (!empty($bearer_token = get_bearer_token())){
             $bearer_token = get_bearer_token();
             if (!empty($bearer_token = get_bearer_token())){
@@ -112,11 +108,10 @@ function getTokenIdUtilisateur(){
                 $id_utilisateur = $objet->Username[0]->Id_Utilisateur;
                 return  $id_utilisateur;
             }
+            else{
+                die("Le Token n'est pas valide");
+            }  
         }
-    } catch (PDOException $e) {
-        // En cas d'erreur, on affiche un message et on arrête le script
-        die("Erreur lors de la récupération des données : " . $e->getMessage());
-    }
 }
 
 //-------------------------------------GET----------------------------------------------------
@@ -145,7 +140,7 @@ function getDataModerateur($Id_Article=null, $pdo){
             return array('dataArticle'=>$dataArticle, 'nbrLike'=>$nbrlike, 'nbrDislike'=>$nbrdislike, 'Liste_des_Utilisateur_Like'=>$userslike, 'Liste_Des_Utilisateur_Dislike'=>$usersdislike) ;
 
         } else {
-            echo("l'article que vous essayer de récuperer n'existe pas");
+            die("l'article que vous essayer de récuperer n'existe pas");
         }
     } catch (PDOException $e) {
         // En cas d'erreur, on affiche un message et on arrête le script
@@ -168,7 +163,7 @@ function getDataPublisher($Id_Article, $pdo){
             return array('dataArticle'=>$dataArticle, 'nbrLike'=>$nbrlike, 'nbrDislike'=>$nbrdislike) ;
 
         } else {
-            echo("l'article que vous essayer de récuperer n'existe pas");
+            die("l'article que vous essayer de récuperer n'existe pas");
         }
     } catch (PDOException $e) {
         // En cas d'erreur, on affiche un message et on arrête le script
@@ -176,15 +171,16 @@ function getDataPublisher($Id_Article, $pdo){
     }
 }
 
-function getDataAnonyme($id, $pdo){
+function getDataAnonyme($Id_Article, $pdo){
     try {
-        if (!is_null($id)){
-            $statement = $pdo->prepare("SELECT Auteur, Date_Publication, Contenu FROM articles WHERE Id_Article = ?");
-            $statement->execute([$id]);
+        if (!is_null($Id_Article)){
+            $statement = $pdo->prepare("SELECT Auteur, Date_Publication, Contenu FROM articles WHERE Id_Article = :Id_Article");
+            $statement->bindParam(":Id_Article", $Id_Article, PDO::PARAM_INT);
+            $statement->execute();
             $data = $statement->fetchAll(PDO::FETCH_ASSOC);
             return $data;
         } else {
-            echo("l'article que vous essayer de récuperer n'existe pas");
+            die("l'article que vous essayer de récuperer n'existe pas");
         }
     } catch (PDOException $e) {
         // En cas d'erreur, on affiche un message et on arrête le script
@@ -196,7 +192,7 @@ function getDataAnonyme($id, $pdo){
 function getNumberLike($pdo, $Id_Article){
     $query = "SELECT COUNT(*) FROM likes WHERE Id_Article = :Id_Article AND Like_or_Dislike = 1";
     $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":Id_Article", $Id_Article);
+    $stmt->bindParam(":Id_Article", $Id_Article, PDO::PARAM_INT);
     $stmt->execute();
     $nbrlike = $stmt->fetchColumn();
     return $nbrlike;
@@ -205,7 +201,7 @@ function getNumberLike($pdo, $Id_Article){
 function getNumberDislike($pdo, $Id_Article){
     $query = "SELECT COUNT(*) FROM likes WHERE Id_Article = :Id_Article AND Like_or_Dislike = 0";
     $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":Id_Article", $Id_Article);
+    $stmt->bindParam(":Id_Article", $Id_Article, PDO::PARAM_INT);
     $stmt->execute();
     $nbrdislike = $stmt->fetchColumn();
     return $nbrdislike;
@@ -214,12 +210,17 @@ function getNumberDislike($pdo, $Id_Article){
 function getListUserLike($pdo, $Id_Article){
     $sql = "SELECT Id_Utilisateur FROM likes WHERE Id_Article = :Id_Article AND Like_or_Dislike = 1";
     $stmt = $pdo->prepare($sql);
-    $stmt->bindParam(":Id_Article", $Id_Article);
+    $stmt->bindParam(":Id_Article", $Id_Article, PDO::PARAM_INT);
     $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
     $userslike = array();
     foreach($result as $row) {
-        $userslike[] = $row['Id_Utilisateur'];
+        $sql = "SELECT Username FROM utilisateurs WHERE Id_Utilisateur = :Id_Utilisateur";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(":Id_Utilisateur", $row['Id_Utilisateur'], PDO::PARAM_INT);
+        $stmt->execute();
+        $resultat = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $userslike[] = $resultat;
     }
     return  $userslike;
 }
@@ -227,20 +228,26 @@ function getListUserLike($pdo, $Id_Article){
 function getListUserDislike($pdo, $Id_Article){
     $sql = "SELECT Id_Utilisateur FROM likes WHERE Id_Article = :Id_Article AND like_or_dislike = 0";
     $stmt = $pdo->prepare($sql);
-    $stmt->bindParam(":Id_Article", $Id_Article);
+    $stmt->bindParam(":Id_Article", $Id_Article, PDO::PARAM_INT);
     $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
     $usersdislike = array();
     foreach($result as $row) {
-        $usersdislike[] = $row['Id_Utilisateur'];
+        $sql = "SELECT Username FROM utilisateurs WHERE Id_Utilisateur = :Id_Utilisateur";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(":Id_Utilisateur", $row['Id_Utilisateur'], PDO::PARAM_INT);
+        $stmt->execute();
+        $resultat = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $usersdislike[] = $resultat;
     }
     return $usersdislike;
 }
 
 //retourne tous les élement associer présent dans la table article associer à Id_Article fournis
 function getAllDataArticle($pdo, $Id_Article){
-    $statement = $pdo->prepare("SELECT * FROM articles WHERE Id_Article = ?");
-    $statement->execute([$Id_Article]);
+    $statement = $pdo->prepare("SELECT * FROM articles WHERE Id_Article = :Id_Article");
+    $statement->bindParam(":Id_Article", $Id_Article, PDO::PARAM_INT);
+    $statement->execute();
     $dataArticle = $statement->fetchAll(PDO::FETCH_ASSOC);
     return  $dataArticle;
 }
@@ -301,15 +308,17 @@ function deleteData($pdo, $Id_Article){
 }
 
 function getAuteurId($pdo, $Auteur){
-    $statement = $pdo->prepare("SELECT Id_Utilisateur FROM utilisateurs WHERE Username = ?");
-    $statement->execute([$Auteur]);
+    $statement = $pdo->prepare("SELECT Id_Utilisateur FROM utilisateurs WHERE Username = :Username");
+    $statement->bindParam(':Username', $Auteur,PDO::PARAM_STR);
+    $statement->execute();
     $dataArticle = $statement->fetchAll(PDO::FETCH_ASSOC);
     return  $dataArticle;
 }
 
 function getAuteurName($pdo, $Id_Article){
-    $statement = $pdo->prepare("SELECT Auteur FROM articles WHERE Id_Article = ?");
-    $statement->execute([$Id_Article]);
+    $statement = $pdo->prepare("SELECT Auteur FROM articles WHERE Id_Article = :Id_Article");
+    $statement->bindParam(':Id_Article', $Id_Article,PDO::PARAM_INT);
+    $statement->execute();
     $dataArticle = $statement->fetchAll(PDO::FETCH_ASSOC);
     return  $dataArticle;
 }
@@ -336,7 +345,6 @@ function addLike($pdo, $Id_Article, $Id_Utilisateur, $Like_or_Dislike) {
 // Mise à jour d'un like pour un article et un utilisateur donné
 function updateLike($pdo, $Id_Article, $Id_Utilisateur, $Like_or_Dislike) {
     try {
-        echo $Id_Article, $Id_Utilisateur, $Like_or_Dislike;
         $statement = $pdo->prepare("UPDATE likes SET Like_or_Dislike = :Like_or_Dislike WHERE Id_Article = :Id_Article AND Id_Utilisateur = :Id_Utilisateur");
         $statement->bindParam(':Id_Article', $Id_Article,PDO::PARAM_INT);
         $statement->bindParam(':Id_Utilisateur', $Id_Utilisateur,PDO::PARAM_INT);
@@ -348,3 +356,31 @@ function updateLike($pdo, $Id_Article, $Id_Utilisateur, $Like_or_Dislike) {
         die("Erreur lors de la mise à jour d'un like : " . $e->getMessage());
     }
 }
+//------------------------DELETE--------------------------------------
+
+//delete les like ou dislike
+function deleteLikeUser($pdo, $Id_Article, $Id_Utilisateur) {
+    try {
+        $statement = $pdo->prepare("DELETE FROM likes WHERE Id_Article = :Id_Article AND Id_Utilisateur = :Id_Utilisateur");
+        $statement->bindParam(':Id_Article', $Id_Article, PDO::PARAM_INT);
+        $statement->bindParam(':Id_Utilisateur', $Id_Utilisateur, PDO::PARAM_INT);
+        $statement->execute();
+        return true;
+    } catch (PDOException $e) {
+        die("Erreur lors de la suppression du like : " . $e->getMessage());
+    }
+}
+
+function deleteAllLike($pdo, $Id_Article) {
+    try {
+        $statement = $pdo->prepare("DELETE FROM likes WHERE Id_Article = :Id_Article");
+        $statement->bindParam(':Id_Article', $Id_Article, PDO::PARAM_INT);
+        $statement->execute();
+        return true;
+    } catch (PDOException $e) {
+        die("Erreur lors de la suppression du like : " . $e->getMessage());
+    }
+}
+
+
+?>
